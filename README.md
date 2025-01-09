@@ -10,7 +10,7 @@ $db_name = "db";
 ## Run project
 Open PHPMyAdmin (http://localhost/phpmyadmin)
 Create a database with name db
-Import database file(given inside the zip package in SQL file folder)
+Import database file
 
 
 ##### Admin login -
