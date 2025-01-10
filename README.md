@@ -1,10 +1,5 @@
 
 Simple crud website using PHP & MYSQL.
-
-$db_host = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "db";
 ```
 
 ## Run project
