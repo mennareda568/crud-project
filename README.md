@@ -10,9 +10,9 @@ Import database file
 
 ##### Admin login -
 * email - admin@gmail.com
-* password - 123
+* password - 1234
 
 ##### User login -
 * email - user@gmail.com
-* password - 123
+* password - 1234
 
