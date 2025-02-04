@@ -52,7 +52,7 @@ if (isset($_SESSION['message'])) {
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $name = $_POST['username'];
     $email = $_POST['email'];
-    $pass = $_POST['pass'];
+    $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
   }
 
   $statment = $connect->prepare("select * from users where email=?");
