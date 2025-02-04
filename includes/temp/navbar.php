@@ -9,7 +9,7 @@
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a href="index.php" class="active">Home</a></li>+
+                        <li><a href="home.php" class="active">Home</a></li>
                         <li><a href="#">Contact Us</a></li>
                         <li><a href="#">Category</a></li>
                         <li><a href="#">Listing</a></li>
