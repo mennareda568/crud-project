@@ -3,6 +3,15 @@ include("initials.php");
 session_start();
 if (isset($_SESSION['login'])) {
 
+    $email = $_SESSION['login'];
+
+    $statment1 = $connect->prepare("SELECT * FROM users WHERE email =?");
+    $statment1->execute(array($email));
+    $item = $statment1->fetch();
+
+    $user_id = $item['user_id'];
+
+
     $page = "All";
     if ($page == "All") {
         $statment1 = $connect->prepare("SELECT * FROM users");
@@ -13,9 +22,7 @@ if (isset($_SESSION['login'])) {
         $page = $_GET['page'];
     }
 
-    if (isset($_GET['user_id'])) {
-        $user_id = $_GET['user_id'];
-    }
+    
 
     $statment1 = $connect->prepare("SELECT * FROM users WHERE	user_id =?");
     $statment1->execute(array($user_id));
