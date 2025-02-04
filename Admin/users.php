@@ -252,24 +252,33 @@ if (isset($_SESSION['login'])) {
             $email = $_POST['email'];
             $status = $_POST['status'];
             $role = $_POST['role'];
+$statment = $connect->prepare("select * from users where email=?");
+             $statment->execute(array($email));
+             $count = $statment->rowcount();
+            $item = $statment->fetch();
+             if ($count > 0) {
+                      echo "<h4 class='text-center alert alert-danger'>This Account Already Registed</h4>";
+                      header("Refresh:3;url=users.php?page=edit&user_id=$old_id");
+             }else{
 
-           
-                try {
-                    $statment = $connect->prepare("UPDATE USERS SET 
-                user_id=?,
-                username=?,
-                email=?,
-               `status`=?,
-               `role`=?,
-                updated_at=now() 
-                WHERE user_id=?");
-                    $statment->execute(array($new_id, $name, $email, $status, $role, $old_id));
-                    $_SESSION['message'] = "UPDATED SUCESSFULLY";
-                    header("Location:users.php");
-                } catch (PDOException $e) {
-                    echo "<h4 class='text-center alert alert-danger'>DUPLICATED IN ID</h4>";
-                    header("Refresh:3;url=users.php?page=edit&user_id=$old_id");
-                }
+                 try {
+                     $statment = $connect->prepare("UPDATE USERS SET 
+                 user_id=?,
+                 username=?,
+                 email=?,
+                `status`=?,
+                `role`=?,
+                 updated_at=now() 
+                 WHERE user_id=?");
+                     $statment->execute(array($new_id, $name, $email, $status, $role, $old_id));
+                     $_SESSION['message'] = "UPDATED SUCESSFULLY";
+                     header("Location:users.php");
+                 } catch (PDOException $e) {
+                     echo "<h4 class='text-center alert alert-danger'>DUPLICATED IN ID</h4>";
+                     header("Refresh:3;url=users.php?page=edit&user_id=$old_id");
+                 }
+             }
+
             
         }
     }
