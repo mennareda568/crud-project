@@ -32,6 +32,7 @@ if (isset($_SESSION['login'])) {
         <div class="row">
             <div class="col-md-10 mt-5">
                 <form action="?page=password" method="post">
+                    <label >Password</label>
                     <input type="hidden" name="old_id" value="<?php echo $item['user_id']; ?>" class="form-control mb-3 ">
                     <input type="password" name="pass" class="form-control mb-3">
                     <input type="submit" value="Update" class="form-control mt-3 btn btn-success ">
@@ -44,7 +45,7 @@ if (isset($_SESSION['login'])) {
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $old_id = $_POST['old_id'];
-            $pass = $_POST['pass'];
+            $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
             try {
                 $statment = $connect->prepare("UPDATE USERS SET 
            `password`=?,
