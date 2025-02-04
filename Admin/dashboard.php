@@ -1,6 +1,5 @@
 <?php
 include("initials.php");
-session_start();
 if (isset($_SESSION['login'])) {
     $statment1 = $connect->prepare("SELECT * FROM users");
     $statment1->execute();
