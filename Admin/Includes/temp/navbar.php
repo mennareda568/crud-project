@@ -1,6 +1,7 @@
 
 <?php
 include("Includes/temp/header.php");
+session_start();
 ?>
 <nav class="navbar navbar-expand-lg  bg-dark ">
   <a class="navbar-brand" href="dashboard.php">DashBoard</a>
