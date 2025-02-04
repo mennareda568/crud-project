@@ -52,7 +52,7 @@ if (isset($_SESSION['message'])) {
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $name = $_POST['username'];
     $email = $_POST['email'];
-    $pass = $_POST['pass'];
+    $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
   }
 
   $statment = $connect->prepare("select * from users where email=?");
@@ -67,7 +67,7 @@ if (isset($_SESSION['message'])) {
             (username,email,`password`,`status`,`role`,created_at)
             values(?,?,?,'1','user',now())");
     $statment->execute(array($name, $email, $pass));
-    $_SESSION['user_login'] = $name;
+    $_SESSION['userlogin'] = $email;
     header("Location:index.php");
   }
 }
