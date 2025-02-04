@@ -1,8 +1,6 @@
+
 <?php
 include("Includes/temp/header.php");
-$statment = $connect->prepare("SELECT * FROM users");
-$statment->execute();
-$result = $statment->fetch();
 ?>
 <nav class="navbar navbar-expand-lg  bg-dark ">
   <a class="navbar-brand" href="dashboard.php">DashBoard</a>
@@ -24,8 +22,9 @@ $result = $statment->fetch();
         <a class="nav-link" href="comments.php">Comments</a>
       </li>
       <li class="nav-item">
-        <a href="password.php?page=all&user_id=<?php echo $result['user_id'] ?>" class="btn btn-warning">Change My Password </i></a>
+        <a href="password.php?email=<?php echo $_SESSION['login'] ?>" class="btn btn-warning">Change My Password </i></a>
       </li>
+
       <a class="nav-link btn btn-success ml-3" href="logout.php">Log out</a>
       </li>
     </ul>
