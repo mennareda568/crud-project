@@ -208,9 +208,9 @@ if (isset($_SESSION['login'])) {
                         <input type="hidden" name="old_id" value="<?php echo $item['user_id']; ?>" class="form-control mb-3 ">
                         <input type="text" name="new_id" value="<?php echo $item['user_id']; ?>" class="form-control mb-3 ">
                         <label>USERNAME</label>
-                        <input type="text"  name="name" value="<?php echo $item['username']; ?>" class="form-control mb-3">
+                        <input type="text" name="name" value="<?php echo $item['username']; ?>" class="form-control mb-3">
                         <label>EMAIL</label>
-                        <input type="email"  name="email" value="<?php echo $item['email']; ?>" class="form-control mb-3">
+                        <input type="email" name="email" value="<?php echo $item['email']; ?>" class="form-control mb-3">
                         <label>STATUS</label>
                         <select name="status" class="form-control mb-3">
                             <?php
@@ -252,34 +252,37 @@ if (isset($_SESSION['login'])) {
             $email = $_POST['email'];
             $status = $_POST['status'];
             $role = $_POST['role'];
-$statment = $connect->prepare("select * from users where email=?");
-             $statment->execute(array($email));
-             $count = $statment->rowcount();
-            $item = $statment->fetch();
-             if ($count > 0) {
-                      echo "<h4 class='text-center alert alert-danger'>This Account Already Registed</h4>";
-                      header("Refresh:3;url=users.php?page=edit&user_id=$old_id");
-             }else{
 
-                 try {
-                     $statment = $connect->prepare("UPDATE USERS SET 
-                 user_id=?,
-                 username=?,
-                 email=?,
-                `status`=?,
-                `role`=?,
-                 updated_at=now() 
-                 WHERE user_id=?");
-                     $statment->execute(array($new_id, $name, $email, $status, $role, $old_id));
-                     $_SESSION['message'] = "UPDATED SUCESSFULLY";
-                     header("Location:users.php");
-                 } catch (PDOException $e) {
-                     echo "<h4 class='text-center alert alert-danger'>DUPLICATED IN ID</h4>";
-                     header("Refresh:3;url=users.php?page=edit&user_id=$old_id");
-                 }
-             }
+            $statment = $connect->prepare("select email from users where user_id = ?");
+            $statment->execute(array($old_id));
+            $old_email = $statment->fetchColumn();
 
-            
+
+
+
+
+            if ($email != $old_email) {
+                $statment = $connect->prepare("select * from users where email=?");
+                $statment->execute(array($email));
+                $count = $statment->rowcount();
+                $item = $statment->fetch();
+
+                if ($count > 0) {
+                    echo "<h4 class='text-center alert alert-danger'>This Account Already Registed</h4>";
+                    header("Refresh:3;url=users.php?page=edit&user_id=$old_id");
+                    exit;
+                }
+            }
+
+            try {
+                $statment = $connect->prepare("UPDATE USERS SET user_id=?, username=?, email=?, `status`=?, `role`=?, updated_at=now() WHERE user_id=?");
+                $statment->execute(array($new_id, $name, $email, $status, $role, $old_id));
+                $_SESSION['message'] = "UPDATED SUCESSFULLY";
+                header("Location:users.php");
+            } catch (PDOException $e) {
+                echo "<h4 class='text-center alert alert-danger'>DUPLICATED IN ID</h4>";
+                header("Refresh:3;url=users.php?page=edit&user_id=$old_id");
+            }
         }
     }
     ?>
