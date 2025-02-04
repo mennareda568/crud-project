@@ -9,18 +9,20 @@
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a href="index.php" class="active">Home</a></li>
-                        <li><a href="#">Category</a></li>
-                        <li><a href="#">Listing</a></li>
+                        <li><a href="index.php" class="active">Home</a></li>+
                         <li><a href="#">Contact Us</a></li>
-                        <li>
+                        
 
                             <?php
                             if (isset($_SESSION['user_login'])) {
+                                ?>
+                                <li><a href="#">Category</a></li>
+                                <li><a href="#">Listing</a></li>
+                                <?php
                                 echo '<div class="main-white-button"><a href="logout.php"> Logout</a></div>';
                             } else {
                                 echo '<div class="d-flex">
-                                <div class="main-white-button"><a href="login.php"> Login</a></div>'.'<div class="main-white-button"><a href="register.php"> Register</a></div>
+                                <div class="main-white-button "><a href="login.php"> Login</a></div>'.'<div class="main-white-button mx-3"><a href="register.php"> Register</a></div>
                                 </div>';
                             }
                             ?>
