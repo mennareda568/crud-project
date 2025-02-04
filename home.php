@@ -15,8 +15,8 @@ include("includes/temp/navbar.php");
         
         <div class="col-lg-10 offset-lg-1">
           <ul class="categories">
-            <li><a href="index.php"><span class="icon"><img src="includes/assets/images/search-icon-01.png" alt="Home"></span> </a></li>
-            <li><a href="index.php"><span class="icon"><img src="includes/assets/images/search-icon-02.png" alt="Food"></span>   </a></li>
+            <li><a href="#"><span class="icon"><img src="includes/assets/images/search-icon-01.png" alt="Home"></span> </a></li>
+            <li><a href="#"><span class="icon"><img src="includes/assets/images/search-icon-02.png" alt="Food"></span>   </a></li>
             <li><a href="#"><span class="icon"><img src="includes/assets/images/search-icon-03.png" alt="Vehicle"></span> </a></li>
             <li><a href="#"><span class="icon"><img src="includes/assets/images/search-icon-04.png" alt="Shopping"></span> </a></li>
             <li><a href="#"><span class="icon"><img src="includes/assets/images/search-icon-05.png" alt="Travel"></span> </a></li>
