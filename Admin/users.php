@@ -270,7 +270,7 @@ if (isset($_SESSION['login'])) {
                     echo "<h4 class='text-center alert alert-danger'>DUPLICATED IN ID</h4>";
                     header("Refresh:3;url=users.php?page=edit&user_id=$old_id");
                 }
-            // }
+            
         }
     }
     ?>
