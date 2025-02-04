@@ -1,6 +1,5 @@
 <?php
 include("initials.php");
-session_start();
 if (isset($_SESSION['login'])) {
 
     $page = "All";
