@@ -3,24 +3,30 @@ include("initials.php");
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $email = $_POST['email'];
   $pass = $_POST['pass'];
-  $statment = $connect->prepare("select * from users where email=? and `password`=?");
-  $statment->execute(array($email, $pass));
+
+  $statment = $connect->prepare("select * from users where email=?");
+  $statment->execute(array($email));
   $count = $statment->rowcount();
   $item = $statment->fetch();
+
   if ($count > 0) {
-    if ($item['status'] == 1) {
-      if ($item['role'] == "admin") {
-        $_SESSION['login'] = $email;
-        header("Location:Admin/dashboard.php");
+      if (password_verify($pass, $item['password'])) {
+          if ($item['status'] == 1) {
+              if ($item['role'] == "admin") {
+                  $_SESSION['login'] = $email;
+                  header("Location:Admin/dashboard.php");
+              } else {
+                  $_SESSION['userlogin'] = $email;
+                  header("Location:index.php");
+              }
+          } else {
+              $_SESSION['message'] = "YOUR ACCOUNT IS NOT ACTIVE";
+          }
       } else {
-        $_SESSION['user_login'] = $email;
-        header("Location:index.php");
+          $_SESSION['message'] = "INVALID EMAIL OR PASSWORD";
       }
-    } else {
-      $_SESSION['message'] = "YOUR ACCOUNT IS NOT ACTIVE";
-    }
   } else {
-    $_SESSION['message'] = "YOUR ACCOUNT IS NOT IN DB REGISTER FIRST";
+      $_SESSION['message'] = "YOUR ACCOUNT IS NOT IN DB REGISTER FIRST";
   }
 }
 
