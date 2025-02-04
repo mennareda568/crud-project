@@ -88,7 +88,6 @@ if (isset($_SESSION['login'])) {
                                 <th scope="col">ID</th>
                                 <th scope="col">NAME</th>
                                 <th scope="col">EMAIL</th>
-                                <th scope="col">PASSWORD</th>
                                 <th scope="col">STATUS</th>
                                 <th scope="col">ROLE</th>
                                 <th scope="col">CREATED_AT</th>
@@ -103,7 +102,6 @@ if (isset($_SESSION['login'])) {
                                 <td><?php echo $item['user_id'] ?></td>
                                 <td><?php echo $item['username'] ?></td>
                                 <td><?php echo $item['email'] ?></td>
-                                <td><?php echo $item['password'] ?></td>
                                 <td><?php echo $item['status'] ?></td>
                                 <td><?php echo $item['role'] ?></td>
                                 <td><?php echo $item['created_at'] ?></td>
@@ -142,8 +140,6 @@ if (isset($_SESSION['login'])) {
                         <input type="text" name="name" class="form-control mb-3">
                         <label>EMAIL</label>
                         <input type="email" name="email" class="form-control mb-3">
-                        <label>PASSWORD</label>
-                        <input type="password" name="pass" class="form-control mb-3">
                         <label>STATUS</label>
                         <select name="status" class="form-control mb-3">
                             <option value="1">active</option>
@@ -168,7 +164,6 @@ if (isset($_SESSION['login'])) {
             $id = $_POST['id'];
             $name = $_POST['name'];
             $email = $_POST['email'];
-            $pass = $_POST['pass'];
             $status = $_POST['status'];
             $role = $_POST['role'];
 
@@ -182,9 +177,9 @@ if (isset($_SESSION['login'])) {
             } else {
                 try {
                     $statment = $connect->prepare("insert into users 
-                    (user_id,username,email,`password`,`status`,`role`,created_at)
-                    values(?,?,?,?,?,?,now())");
-                    $statment->execute(array($id, $name, $email, $pass, $status, $role));
+                    (user_id,username,email,`status`,`role`,created_at)
+                    values(?,?,?,?,?,now())");
+                    $statment->execute(array($id, $name, $email, $status, $role));
                     $_SESSION['message'] = "CREATED SUCESSFULLY";
                     header("Location:users.php");
                 } catch (PDOException $e) {
@@ -214,8 +209,6 @@ if (isset($_SESSION['login'])) {
                         <input type="text" readonly name="name" value="<?php echo $item['username']; ?>" class="form-control mb-3">
                         <label>EMAIL</label>
                         <input type="email" readonly name="email" value="<?php echo $item['email']; ?>" class="form-control mb-3">
-                        <label>PASSWORD</label>
-                        <input type="password" readonly name="pass" value="<?php echo $item['password']; ?>" class="form-control mb-3">
                         <label>STATUS</label>
                         <select name="status" class="form-control mb-3">
                             <?php
@@ -255,7 +248,6 @@ if (isset($_SESSION['login'])) {
             $new_id = $_POST['new_id'];
             $name = $_POST['name'];
             $email = $_POST['email'];
-            $pass = $_POST['pass'];
             $status = $_POST['status'];
             $role = $_POST['role'];
 
@@ -265,12 +257,11 @@ if (isset($_SESSION['login'])) {
                 user_id=?,
                 username=?,
                 email=?,
-               `password`=?,
                `status`=?,
                `role`=?,
                 updated_at=now() 
                 WHERE user_id=?");
-                    $statment->execute(array($new_id, $name, $email, $pass, $status, $role, $old_id));
+                    $statment->execute(array($new_id, $name, $email, $status, $role, $old_id));
                     $_SESSION['message'] = "UPDATED SUCESSFULLY";
                     header("Location:users.php");
                 } catch (PDOException $e) {
