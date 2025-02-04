@@ -35,7 +35,6 @@ if (isset($_SESSION['login'])) {
                                     <th scope="col">Post_id</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col">Image</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Operation</th>
                                 </tr>
@@ -48,7 +47,6 @@ if (isset($_SESSION['login'])) {
                                         <th scope="row"><?php echo $item['post_id'] ?></th>
                                         <td><?php echo $item['title'] ?></td>
                                         <td><?php echo $item['description'] ?></td>
-                                        <td><?php echo $item['image'] ?></td>
                                         <td><?php echo $item['status'] ?></td>
                                         <td>
                                             <a href="?page=show&post_id=<?php echo $item['post_id'] ?>" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
@@ -88,7 +86,6 @@ if (isset($_SESSION['login'])) {
                                 <th scope="col">post_id</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Description</th>
-                                <th scope="col">Image</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">User_id</th>
                                 <th scope="col">Category_id</th>
@@ -102,7 +99,6 @@ if (isset($_SESSION['login'])) {
                                 <th scope="row"><?php echo $item['post_id'] ?></th>
                                 <td><?php echo $item['title'] ?></td>
                                 <td><?php echo $item['description'] ?></td>
-                                <td><?php echo $item['image'] ?></td>
                                 <td><?php echo $item['status'] ?></td>
                                 <td><?php echo $item['user_id'] ?></td>
                                 <td><?php echo $item['category_id'] ?></td>
@@ -151,8 +147,6 @@ if (isset($_SESSION['login'])) {
                         <input type="text" name="title" class="form-control mb-4">
                         <label>DESCRIPTION</label>
                         <input type="text" name="desc" class="form-control mb-4">
-                        <label>IMAGE</label>
-                        <input type="text" name="image" class="form-control mb-4">
                         <label>STATUS</label>
                         <select name="status" class="form-control mb-4">
                             <option value="1">active</option>
@@ -197,17 +191,16 @@ if (isset($_SESSION['login'])) {
             $post_id = $_POST['post_id'];
             $title = $_POST['title'];
             $desc = $_POST['desc'];
-            $image = $_POST['image'];
             $status = $_POST['status'];
             $userid = $_POST['user_id'];
             $cateid = $_POST['category_id'];
         }
         try {
             $statment = $connect->prepare("insert into posts 
-        (post_id,title,description,image,`status`,user_id,category_id,created_at)
+        (post_id,title,description,`status`,user_id,category_id,created_at)
         values
-     (?,?,?,?,?,?,?,now())");
-            $statment->execute(array($post_id, $title, $desc, $image, $status, $userid, $cateid));
+     (?,?,?,?,?,?,now())");
+            $statment->execute(array($post_id, $title, $desc, $status, $userid, $cateid));
             $_SESSION['message'] = "created sucessfully";
             header("Location:posts.php");
         } catch (PDOException $e) {
@@ -234,8 +227,6 @@ if (isset($_SESSION['login'])) {
                         <input type="text" name="title" value="<?php echo $result['title'] ?>" class="form-control mb-4">
                         <label>DESCRIPTION</label>
                         <input type="text" name="desc" value="<?php echo $result['description'] ?>" class="form-control mb-4">
-                        <label>IMAGE</label>
-                        <input type="text" name="image" value="<?php echo $result['image'] ?>" class="form-control mb-4">
                         <label>STATUS</label>
                         <select name="status" class="form-control mb-4">
                             <?php
@@ -260,14 +251,13 @@ if (isset($_SESSION['login'])) {
             $new_id = $_POST['new_id'];
             $title = $_POST['title'];
             $desc = $_POST['desc'];
-            $image = $_POST['image'];
             $status = $_POST['status'];
         }
         try {
             $statment = $connect->prepare("UPDATE posts
-        SET post_id=?,title=?,description=?,image=?,`status`=?,updated_at=now()
+        SET post_id=?,title=?,description=?,`status`=?,updated_at=now()
         WHERE post_id=?");
-            $statment->execute(array($new_id, $title, $desc, $image, $status, $oldid));
+            $statment->execute(array($new_id, $title, $desc, $status, $oldid));
             $_SESSION['message'] = "UPDATED SUCESSFULLY";
             header("Location:posts.php");
         } catch (PDOException $e) {
