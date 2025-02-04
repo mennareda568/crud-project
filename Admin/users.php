@@ -208,9 +208,9 @@ if (isset($_SESSION['login'])) {
                         <input type="hidden" name="old_id" value="<?php echo $item['user_id']; ?>" class="form-control mb-3 ">
                         <input type="text" name="new_id" value="<?php echo $item['user_id']; ?>" class="form-control mb-3 ">
                         <label>USERNAME</label>
-                        <input type="text" readonly name="name" value="<?php echo $item['username']; ?>" class="form-control mb-3">
+                        <input type="text"  name="name" value="<?php echo $item['username']; ?>" class="form-control mb-3">
                         <label>EMAIL</label>
-                        <input type="email" readonly name="email" value="<?php echo $item['email']; ?>" class="form-control mb-3">
+                        <input type="email"  name="email" value="<?php echo $item['email']; ?>" class="form-control mb-3">
                         <label>STATUS</label>
                         <select name="status" class="form-control mb-3">
                             <?php
