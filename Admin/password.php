@@ -1,6 +1,5 @@
 <?php
 include("initials.php");
-session_start();
 if (isset($_SESSION['login'])) {
 
     $email = $_SESSION['login'];
@@ -45,7 +44,7 @@ if (isset($_SESSION['login'])) {
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $old_id = $_POST['old_id'];
-            $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+            $pass = $_POST['pass'];
             try {
                 $statment = $connect->prepare("UPDATE USERS SET 
            `password`=?,
