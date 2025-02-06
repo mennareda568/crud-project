@@ -12,7 +12,7 @@ session_start();
         <a class="nav-link" href="index.php">Categories</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="posts.php">Posts</a>
+        <a class="nav-link" href="posts.php">Articles</a>
       </li>
       <li class="nav-item">
         <a href="password.php?email=<?php echo $_SESSION['userlogin'] ?>" class="btn btn-warning">Change My Password </i></a>
