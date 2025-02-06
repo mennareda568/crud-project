@@ -118,7 +118,7 @@ if (isset($_SESSION['userlogin'])) {
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-10 m-auto">
-                    <h4 class="text-center mt-4">CREATE POST PAGE</h4>
+                    <h4 class="text-center mt-4">CREATE ARTICLE PAGE</h4>
                     <form action="?page=savenew" method="post">
                         <label>TITLE</label>
                         <input type="text" name="title" class="form-control mb-4">
