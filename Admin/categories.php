@@ -32,7 +32,7 @@ if (isset($_SESSION['login'])) {
                         <table class="table table-striped table-dark ">
                             <thead>
                                 <tr>
-                                    <th scope="col">Category_id</th>
+                                    <th scope="col">id</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Status</th>
@@ -82,7 +82,7 @@ if (isset($_SESSION['login'])) {
                     <table class="table table-striped table-dark">
                         <thead>
                             <tr>
-                                <th scope="col">Category_id</th>
+                                <th scope="col">id</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Status</th>
@@ -125,8 +125,6 @@ if (isset($_SESSION['login'])) {
                 <div class="col-md-10 m-auto">
                     <h4 class="text-center mt-4">CREATE CATEGORY PAGE</h4>
                     <form action="?page=savenew" method="post">
-                        <label>CATEGORY_ID</label>
-                        <input type="text" name="category_id" class="form-control mb-4">
                         <label>TITLE</label>
                         <input type="text" name="title" class="form-control mb-4">
                         <label>DESCRIPTION</label>
@@ -146,21 +144,20 @@ if (isset($_SESSION['login'])) {
     <?php
     } else if ($page == "savenew") {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            $category_id = $_POST['category_id'];
             $title = $_POST['title'];
             $desc = $_POST['desc'];
             $status = $_POST['status'];
         }
         try {
             $statment = $connect->prepare("insert into categories 
-        (category_id,title,description,`status`,created_at)
+        (title,description,`status`,created_at)
         values
-        (?,?,?,?,now())");
-            $statment->execute(array($category_id, $title, $desc, $status));
+        (?,?,?,now())");
+            $statment->execute(array( $title, $desc, $status));
             $_SESSION['message'] = "created sucessfully";
             header("Location:categories.php");
         } catch (PDOException $e) {
-            echo "<h4 class='text-center alert alert-danger'>DUPLICATED IN VALUES</h4>";
+            echo "<h4 class='text-center alert alert-danger'>Error IN VALUES</h4>";
             header("Refresh:3;url=categories.php?page=create");
         }
     } else if ($page == "edit") {
@@ -178,8 +175,6 @@ if (isset($_SESSION['login'])) {
                     <h4 class="text-center mt-4">UPDATE CATEGORY PAGE</h4>
                     <form action="?page=saveupdate" method="post">
                         <input type="hidden" name="oldid" value="<?php echo $item['category_id'] ?>" class="form-control mb-4">
-                        <label>CATEGORY_ID</label>
-                        <input type="text" name="new_id" value="<?php echo $item['category_id'] ?>" class="form-control mb-4">
                         <label>TITLE</label>
                         <input type="text" name="title" value="<?php echo $item['title'] ?>" class="form-control mb-4">
                         <label>DESCRIPTION</label>
@@ -205,16 +200,15 @@ if (isset($_SESSION['login'])) {
     } else if ($page == "saveupdate") {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $oldid = $_POST['oldid'];
-            $new_id = $_POST['new_id'];
             $title = $_POST['title'];
             $desc = $_POST['desc'];
             $status = $_POST['status'];
         }
         try {
             $statment = $connect->prepare("UPDATE categories
-        SET category_id=?,title=?,description=?,`status`=?,updated_at=now()
+        SET title=?,description=?,`status`=?,updated_at=now()
         WHERE category_id=?");
-            $statment->execute(array($new_id, $title, $desc, $status, $oldid));
+            $statment->execute(array( $title, $desc, $status, $oldid));
             $_SESSION['message'] = "UPDATED SUCESSFULLY";
             header("Location:categories.php");
         } catch (PDOException $e) {
