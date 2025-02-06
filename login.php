@@ -10,30 +10,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $item = $statment->fetch();
 
   if ($count > 0) {
-    if (password_verify($pass, $item['password'])) {
-      if ($item['status'] == 1) {
-        if ($item['role'] == "admin") {
-          $_SESSION['login'] = $email;
-          $_SESSION['login_id'] = $item['user_id'];
-          header("Location:Admin/dashboard.php");
-
-        } else if ($item['role'] == "author") {
-          $_SESSION['userlogin'] = $email;
-          $_SESSION['userlogin_id'] = $item['user_id'];  
-          header("Location:index.php");
-
-        } else if ($item['role'] == "user") {
-          $_SESSION['userlogin'] = $email;
-          header("Location:index.php");
-        }
+      if (password_verify($pass, $item['password'])) {
+          if ($item['status'] == 1) {
+              if ($item['role'] == "admin") {
+                  $_SESSION['login'] = $email;
+                  header("Location:Admin/dashboard.php");
+              } else {
+                  $_SESSION['userlogin'] = $email;                  
+                  header("Location:index.php");
+              }
+          } else {
+              $_SESSION['message'] = "YOUR ACCOUNT IS NOT ACTIVE";
+          }
       } else {
-        $_SESSION['message'] = "YOUR ACCOUNT IS NOT ACTIVE";
+          $_SESSION['message'] = "INVALID EMAIL OR PASSWORD";
       }
-    } else {
-      $_SESSION['message'] = "INVALID EMAIL OR PASSWORD";
-    }
   } else {
-    $_SESSION['message'] = "YOUR ACCOUNT IS NOT IN DB REGISTER FIRST";
+      $_SESSION['message'] = "YOUR ACCOUNT IS NOT IN DB REGISTER FIRST";
   }
 }
 
@@ -67,7 +60,7 @@ if (isset($_SESSION['message'])) {
           <div class="signup-link">
             <a href="register.php"> Register Page</a>
           </div>
-
+        
         </form>
       </div>
 
