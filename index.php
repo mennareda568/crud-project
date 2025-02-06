@@ -27,6 +27,7 @@ if (isset($_SESSION['userlogin'])) {
                         ?>
                         <h4 class="text-center mb-4">NUMBER OF CATEGORIES
                             <span class="badge badge-primary"><?php echo $usercount ?></span>
+                            
                         </h4>
                         <table class="table table-striped table-dark ">
                             <thead>
@@ -47,11 +48,11 @@ if (isset($_SESSION['userlogin'])) {
                                         <td><?php echo $item['description'] ?></td>
                                         <td>
                                             <a href="?page=show&category_id=<?php echo $item['category_id'] ?>" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
+                                            <a href="?page=create&category_id=<?php echo $item['category_id'] ?>" class=" btn btn-success">create new post</a>
                                         </td>
                                     </tr>
                                 <?php
                                 }
-
                                 ?>
 
                             </tbody>
@@ -102,6 +103,49 @@ if (isset($_SESSION['userlogin'])) {
             </div>
         </div>
     <?php
+    }  else if ($page == "create") {
+        if (isset($_GET['category_id'])) {
+            $category_id = $_GET['category_id'];
+        }
+
+    ?>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-10 m-auto">
+                    <h4 class="text-center mt-4">CREATE POST PAGE</h4>
+                    <form action="?page=savenew" method="post">
+                        <label>TITLE</label>
+                        <input type="text" name="title" class="form-control mb-4">
+                        <label>DESCRIPTION</label>
+                        <input type="text" name="desc" class="form-control mb-4">
+                        <input name="category_id" type="hidden" value="<?php echo $category_id?>">
+                        <input type="submit" class="form-control  btn btn-success" value="CREATE NEW POST">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    <?php
+    } else if ($page == "savenew") {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $title = $_POST['title'];
+            $desc = $_POST['desc'];
+            $cateid = $_POST['category_id'];
+        }
+        try {
+            $statment = $connect->prepare("insert into posts 
+        (title,description,user_id,category_id,created_at)
+        values
+     (?,?,?,?,now())");
+            $statment->execute(array( $title, $desc, $_SESSION['userlogin_id'],$cateid));
+            $_SESSION['message'] = "created sucessfully";
+            header("Location:posts.php");
+        } catch (PDOException $e) {
+            echo "<h4 class='text-center alert alert-danger'>Error IN VALUES</h4>";
+            header("Refresh:3;url=posts.php?page=create&user_id=$userid");
+        }
+
+        
     } 
 
 } else {
