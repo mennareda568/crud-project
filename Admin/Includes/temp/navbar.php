@@ -17,10 +17,7 @@ session_start();
         <a class="nav-link" href="categories.php">Categories</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="posts.php">Posts</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="comments.php">Comments</a>
+        <a class="nav-link" href="posts.php">Articles</a>
       </li>
       <li class="nav-item">
         <a href="password.php?email=<?php echo $_SESSION['login'] ?>" class="btn btn-warning">Change My Password </i></a>
