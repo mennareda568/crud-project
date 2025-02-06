@@ -133,8 +133,6 @@ if (isset($_SESSION['login'])) {
                 <div class="col-md-10 mt-5">
                     <h4 class="text-center">CREATE USER PAGE</h4>
                     <form action="?page=savenew" method="post">
-                        <label>USER_ID</label>
-                        <input type="text" name="id" class="form-control mb-3 ">
                         <label>USERNAME</label>
                         <input type="text" name="name" class="form-control mb-3">
                         <label>EMAIL</label>
@@ -162,7 +160,6 @@ if (isset($_SESSION['login'])) {
 
     } else if ($page == "savenew") {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            $id = $_POST['id'];
             $name = $_POST['name'];
             $email = $_POST['email'];
             $pass = $_POST['pass'];
@@ -179,9 +176,9 @@ if (isset($_SESSION['login'])) {
             } else {
                 try {
                     $statment = $connect->prepare("insert into users 
-                    (user_id,username,email,`password`,`status`,`role`,created_at)
-                    values(?,?,?,?,?,?,now())");
-                    $statment->execute(array($id, $name, $email, $pass, $status, $role));
+                    (username,email,`password`,`status`,`role`,created_at)
+                    values(?,?,?,?,?,now())");
+                    $statment->execute(array( $name, $email, $pass, $status, $role));
                     $_SESSION['message'] = "CREATED SUCESSFULLY";
                     header("Location:users.php");
                 } catch (PDOException $e) {
@@ -204,9 +201,7 @@ if (isset($_SESSION['login'])) {
                 <div class="col-md-10 mt-5">
                     <h4 class="text-center">UPDATE USER PAGE</h4>
                     <form action="?page=update" method="post">
-                        <label>USER_ID</label>
                         <input type="hidden" name="old_id" value="<?php echo $item['user_id']; ?>" class="form-control mb-3 ">
-                        <input type="text" name="new_id" value="<?php echo $item['user_id']; ?>" class="form-control mb-3 ">
                         <label>USERNAME</label>
                         <input type="text" name="name" value="<?php echo $item['username']; ?>" class="form-control mb-3">
                         <label>EMAIL</label>
@@ -247,7 +242,6 @@ if (isset($_SESSION['login'])) {
     } else if ($page == "update") {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $old_id = $_POST['old_id'];
-            $new_id = $_POST['new_id'];
             $name = $_POST['name'];
             $email = $_POST['email'];
             $status = $_POST['status'];
@@ -256,10 +250,6 @@ if (isset($_SESSION['login'])) {
             $statment = $connect->prepare("select email from users where user_id = ?");
             $statment->execute(array($old_id));
             $old_email = $statment->fetchColumn();
-
-
-
-
 
             if ($email != $old_email) {
                 $statment = $connect->prepare("select * from users where email=?");
@@ -275,8 +265,8 @@ if (isset($_SESSION['login'])) {
             }
 
             try {
-                $statment = $connect->prepare("UPDATE USERS SET user_id=?, username=?, email=?, `status`=?, `role`=?, updated_at=now() WHERE user_id=?");
-                $statment->execute(array($new_id, $name, $email, $status, $role, $old_id));
+                $statment = $connect->prepare("UPDATE USERS SET username=?, email=?, `status`=?, `role`=?, updated_at=now() WHERE user_id=?");
+                $statment->execute(array($name, $email, $status, $role, $old_id));
                 $_SESSION['message'] = "UPDATED SUCESSFULLY";
                 header("Location:users.php");
             } catch (PDOException $e) {
