@@ -116,7 +116,7 @@ if (isset($_SESSION['userlogin'])) {
                     <form action="?page=savenew" method="post">
                         <label>TITLE</label>
                         <input type="text" name="title" class="form-control mb-4">
-                        <label>DESCRIPTION</label>
+                        <label>CONTENT</label>
                         <input type="text" name="desc" class="form-control mb-4">
                         <input name="category_id" type="hidden" value="<?php echo $category_id?>">
                         <input type="submit" class="form-control  btn btn-success" value="CREATE NEW POST">
