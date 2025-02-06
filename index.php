@@ -2,6 +2,12 @@
 include("users.php");
 if (isset($_SESSION['userlogin'])) {
 
+    $email = $_SESSION['userlogin'];  
+    $statment1 = $connect->prepare("SELECT * FROM users WHERE email =?");
+    $statment1->execute(array($email));
+    $item = $statment1->fetch();
+    $_SESSION['userlogin_id'] =$item['user_id'] ;
+
     $page = "All";
     if (isset($_GET['page'])) {
         $page = $_GET['page'];
@@ -104,10 +110,10 @@ if (isset($_SESSION['userlogin'])) {
         </div>
     <?php
     }  else if ($page == "create") {
+
         if (isset($_GET['category_id'])) {
             $category_id = $_GET['category_id'];
         }
-
     ?>
         <div class="container mt-5">
             <div class="row">
@@ -118,7 +124,7 @@ if (isset($_SESSION['userlogin'])) {
                         <input type="text" name="title" class="form-control mb-4">
                         <label>CONTENT</label>
                         <input type="text" name="desc" class="form-control mb-4">
-                        <input name="category_id" type="hidden" value="<?php echo $category_id?>">
+                        <input name="category_id" type="hidden" value="<?php echo $category_id ?>">
                         <input type="submit" class="form-control  btn btn-success" value="CREATE NEW POST">
                     </form>
                 </div>
@@ -142,7 +148,7 @@ if (isset($_SESSION['userlogin'])) {
             header("Location:posts.php");
         } catch (PDOException $e) {
             echo "<h4 class='text-center alert alert-danger'>Error IN VALUES</h4>";
-            header("Refresh:3;url=posts.php?page=create&user_id=$userid");
+            header("Refresh:3;url=posts.php?page=create&category_id=$cateid");
         }
 
         
