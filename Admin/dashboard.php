@@ -13,16 +13,13 @@ if (isset($_SESSION['login'])) {
     $statment3->execute();
     $postcount = $statment3->rowCount();
 
-    $statment4 = $connect->prepare("SELECT * FROM comments");
-    $statment4->execute();
-    $commentcount = $statment4->rowCount();
 
  ?>
 
     <div class="container mt-5 pt-5">
         <div class="row ">
 
-            <div class="col-md-3 text-center ">
+            <div class="col-md-4 text-center ">
                 <div class="box">
                     <i class="fa-solid fa-user fa-2xl"></i>
                     <h3>USERS</h3>
@@ -32,7 +29,7 @@ if (isset($_SESSION['login'])) {
             </div>
 
 
-            <div class="col-md-3 text-center ">
+            <div class="col-md-4 text-center ">
                 <div class="box">
                     <i class="fa-solid fa-shapes fa-2xl"></i>
                     <h3>CATEGROIES</h3>
@@ -42,24 +39,15 @@ if (isset($_SESSION['login'])) {
             </div>
 
 
-            <div class="col-md-3 text-center ">
+            <div class="col-md-4 text-center ">
                 <div class="box">
                     <i class="fa-solid fa-address-card fa-2xl"></i>
-                    <h3>POSTS</h3>
+                    <h3>ARTICLES</h3>
                     <h4><?php echo $postcount ?></h4>
                     <a href="posts.php" class="btn btn-warning">Show</a>
                 </div>
             </div>
 
-
-            <div class="col-md-3 text-center ">
-                <div class="box">
-                    <i class="fa-solid fa-comment fa-2xl"></i>
-                    <h3>COMMENTS</h3>
-                    <h4><?php echo $commentcount ?></h4>
-                    <a href="comments.php" class="btn btn-danger">Show</a>
-                </div>
-            </div>
 
         </div>
     </div>
