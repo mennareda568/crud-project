@@ -25,7 +25,7 @@ if (isset($_SESSION['login'])) {
                             header("refresh:3;url=posts.php");
                         }
                         ?>
-                        <h4 class="text-center mb-4">NUMBER OF ARTICLES
+                        <h4 class="text-center mb-4"> Pending Approval Articles
                             <span class="badge badge-primary"><?php echo $usercount ?></span>
                         </h4>
                         <table class="table table-striped table-dark ">
