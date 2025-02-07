@@ -2,11 +2,11 @@
 include("users.php");
 if (isset($_SESSION['userlogin'])) {
 
-    $email = $_SESSION['userlogin'];  
+    $email = $_SESSION['userlogin'];
     $statment1 = $connect->prepare("SELECT * FROM users WHERE email =?");
     $statment1->execute(array($email));
     $item = $statment1->fetch();
-    $_SESSION['userlogin_id'] =$item['user_id'] ;
+    $_SESSION['userlogin_id'] = $item['user_id'];
 
     $page = "All";
     if (isset($_GET['page'])) {
@@ -33,7 +33,7 @@ if (isset($_SESSION['userlogin'])) {
                         ?>
                         <h4 class="text-center mb-4">NUMBER OF CATEGORIES
                             <span class="badge badge-primary"><?php echo $usercount ?></span>
-                            
+
                         </h4>
                         <table class="table table-striped table-dark ">
                             <thead>
@@ -109,7 +109,7 @@ if (isset($_SESSION['userlogin'])) {
             </div>
         </div>
     <?php
-    }  else if ($page == "create") {
+    } else if ($page == "create") {
 
         if (isset($_GET['category_id'])) {
             $category_id = $_GET['category_id'];
@@ -131,7 +131,7 @@ if (isset($_SESSION['userlogin'])) {
             </div>
         </div>
 
-    <?php
+<?php
     } else if ($page == "savenew") {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $title = $_POST['title'];
@@ -143,17 +143,14 @@ if (isset($_SESSION['userlogin'])) {
         (title,description,user_id,category_id,created_at)
         values
      (?,?,?,?,now())");
-            $statment->execute(array( $title, $desc, $_SESSION['userlogin_id'],$cateid));
-            $_SESSION['message'] = "created sucessfully";
+            $statment->execute(array($title, $desc, $_SESSION['userlogin_id'], $cateid));
+            $_SESSION['message'] = "Your post is awaiting admin review and approval";
             header("Location:posts.php");
         } catch (PDOException $e) {
             echo "<h4 class='text-center alert alert-danger'>Error IN VALUES</h4>";
             header("Refresh:3;url=posts.php?page=create&category_id=$cateid");
         }
-
-        
-    } 
-
+    }
 } else {
     $_SESSION['message'] = "Please Login First";
     header("Location:login.php");
