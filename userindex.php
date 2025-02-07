@@ -1,14 +1,6 @@
 <?php
 include("users.php");
 if (isset($_SESSION['loginuser'])) {
-
-    $email = $_SESSION['loginuser'];
-    $statment1 = $connect->prepare("SELECT * FROM users WHERE email =?");
-    $statment1->execute(array($email));
-    $item = $statment1->fetch();
-    $_SESSION['userlogin_id'] = $item['user_id'];
-
-
         $page = "All";
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
@@ -52,7 +44,7 @@ if (isset($_SESSION['loginuser'])) {
                                             <td><?php echo $item['description'] ?></td>
            
                                             <td>
-                                                <a href="?page=report&user_id=<?php echo $item['user_id'] ?>" class="btn btn-danger"><i class="fa-solid fa-flag"></i></a>
+                                                <a href="?page=report&post_id=<?php echo $item['post_id'] ?>" class="btn btn-danger"><i class="fa-solid fa-flag"></i></a>
                                             </td>
                                         </tr>
                                     <?php
@@ -70,12 +62,10 @@ if (isset($_SESSION['loginuser'])) {
         <?php
     
         } else if ($page == "report") {
-            if (isset($_GET['user_id'])) {
-                $user_id = $_GET['user_id'];
+            if (isset($_GET['post_id'])) {
+                $post_id = $_GET['post_id'];
             }
-            $statment = $connect->prepare("select * from reports where user_id =?");
-            $statment->execute(array($user_id));
-            $item = $statment->fetch();
+  
         ?>
 
             <div class="container mt-5">
@@ -83,8 +73,8 @@ if (isset($_SESSION['loginuser'])) {
                 <div class="col-md-10 m-auto">
                     <h4 class="text-center mt-4">REPORT PAGE</h4>
                     <form action="?page=savereport" method="post">
-                        <input type="hidden" name="oldid" value="<?php echo $item['user_id'] ?>" class="form-control mb-4">
                         <input type="text" name="report" class="form-control mb-4">
+                        <input type="hidden" name="post_id" value="<?php echo $post_id?>">
                         <input type="submit" class="form-control  btn btn-success" value="REPORT POST">
                     </form>
                 </div>
@@ -95,17 +85,16 @@ if (isset($_SESSION['loginuser'])) {
         <?php
     } else if ($page == "savereport") {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            $oldid = $_POST['oldid'];
             $report = $_POST['report'];
+            $post_id = $_POST['post_id'];
+
         }
 
-            $statment = $connect->prepare("UPDATE reports
-        SET report=?,created_at=now()
-        WHERE id=?");
-            $statment->execute(array( $report,$oldid));
+            $statment = $connect->prepare("insert into reports (report,post_id,created_at)
+            values(?,?,now())");
+            $statment->execute(array( $report,$post_id));
             $_SESSION['message'] = "Your report was sent sucessfully";
-            header("Location:userindex.php");
-        
+            header("Location:userindex.php");       
     }
     ?>
    <?php     
