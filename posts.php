@@ -7,7 +7,7 @@ if (isset($_SESSION['userlogin'])) {
         $page = $_GET['page'];
     }
     if ($page == "All") {
-        $statment = $connect->prepare("select * from posts");
+        $statment = $connect->prepare("select * from posts where status='1' ");
         $statment->execute();
         $usercount = $statment->rowcount();
         $result = $statment->fetchall();
@@ -26,7 +26,7 @@ if (isset($_SESSION['userlogin'])) {
                         }
                         ?>
                         <h4 class="text-center mb-4">NUMBER OF ARTICLES
-                            <span class="badge badge-primary"><?php echo $usercount ?></span>
+                            <!-- <span class="badge badge-primary"><?php echo $usercount ?></span> -->
                         </h4>
                         <table class="table table-striped table-dark ">
                             <thead>
