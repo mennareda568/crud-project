@@ -9,7 +9,7 @@ if (isset($_SESSION['login'])) {
     $statment2->execute();
     $catecount = $statment2->rowCount();
 
-    $statment3 = $connect->prepare("SELECT * FROM posts");
+    $statment3 = $connect->prepare("SELECT * FROM posts where `status`='1'");
     $statment3->execute();
     $postcount = $statment3->rowCount();
 
