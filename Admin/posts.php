@@ -7,10 +7,16 @@ if (isset($_SESSION['login'])) {
         $page = $_GET['page'];
     }
     if ($page == "All") {
-        $statment = $connect->prepare("select * from posts where `status`='1'");
+       $statment = $connect->prepare("SELECT * FROM posts WHERE `status`=:status");
+        $statment->bindParam(':status', $status);
+
+        $status = 1;
         $statment->execute();
-        $usercount = $statment->rowcount();
-        $result = $statment->fetchall();
+        $result = $statment->fetchAll();
+
+        $status = 0;
+        $statment->execute();
+        $pendcount = $statment->rowCount();
 
 ?>
 
@@ -25,11 +31,12 @@ if (isset($_SESSION['login'])) {
                             header("refresh:3;url=posts.php");
                         }
                         ?>
-                        <div class="d-flex justify-content-center ">
-                            <h4 class="text-center mb-4"> Number Of Articles
-                                <span class="badge badge-primary"><?php echo $usercount ?></span>
+                        <div class="d-flex justify-content-between ">
+                            <h4 class="text-center mb-4"> Articles
                             </h4>
-                            <a  href="?page=pending"> Pending Articles</a>
+                            <a  href="?page=pending"> Pending Articles
+                            <span class="badge badge-primary"><?php echo $pendcount ?></span>
+                            </a>
                         </div>
                         <table class="table table-striped table-dark ">
                             <thead>
