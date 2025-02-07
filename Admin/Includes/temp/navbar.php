@@ -9,18 +9,12 @@ session_start();
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ml-auto">
-      <?php
-      if (isset ($_SESSION['userlogin']) && isset($_SESSION['login'])){
-      ?>
         <li class="nav-item">
           <a class="nav-link" href="index.php">Categories</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="posts.php">Articles</a>
         </li>
-        <?php
-      }
-      ?>
       <li class="nav-item">
         <a href="password.php?email=<?php echo $_SESSION['userlogin'] ?>" class="btn btn-warning">Change My Password </i></a>
       </li>
