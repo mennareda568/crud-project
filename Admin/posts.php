@@ -7,7 +7,7 @@ if (isset($_SESSION['login'])) {
         $page = $_GET['page'];
     }
     if ($page == "All") {
-        $statment = $connect->prepare("select * from posts");
+        $statment = $connect->prepare("select * from posts where `status`='0' ");
         $statment->execute();
         $usercount = $statment->rowcount();
         $result = $statment->fetchall();
