@@ -25,6 +25,10 @@ Import database file
 * email - admin@gmail.com
 * password - 1234
 
+##### Author login -
+* email - author@gmail.com
+* password - 1234
+
 ##### User login -
 * email - user@gmail.com
 * password - 1234
