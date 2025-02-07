@@ -15,10 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
               if ($item['role'] == "admin") {
                   $_SESSION['login'] = $email;
                   header("Location:Admin/dashboard.php");
-              } else {
+              } else if($item['role'] == "author") {
                   $_SESSION['userlogin'] = $email;                  
                   header("Location:index.php");
-              }
+              }else if($item['role'] == "user") {
+                $_SESSION['loginuser'] = $email;                  
+                header("Location:userindex.php");
+            }
           } else {
               $_SESSION['message'] = "YOUR ACCOUNT IS NOT ACTIVE";
           }
