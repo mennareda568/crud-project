@@ -10,6 +10,7 @@ if (isset($_SESSION['login'])) {
         $statment = $connect->prepare("SELECT posts.post_id,COUNT(reports.id) AS NumberOfReports FROM posts
         LEFT JOIN reports ON posts.post_id = reports.post_id
         GROUP BY post_id
+        HAVING COUNT(reports.id) >= 3 
         ORDER BY NumberOfReports DESC");
         $statment->execute();
         $result = $statment->fetchall();
@@ -43,18 +44,18 @@ if (isset($_SESSION['login'])) {
                             <tbody>
                                 <?php
                                 foreach ($result as $item) {
-                                ?>
+                                        ?>
                                     <tr>
-                                    <td><?php echo $item['post_id'] ?></td>
-                                    <td><?php echo $item['NumberOfReports'] ?></td>
-                                    
+                                        <td><?php echo $item['post_id'] ?></td>
+                                        <td><?php echo $item['NumberOfReports'] ?></td>
+                                        
                                         <td>
                                             <a href="posts.php?page=show&post_id=<?php echo $item['post_id'] ?>" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
                                             <a href="posts.php?page=edit&post_id=<?php echo $item['post_id'] ?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a>
                                             <a href="posts.php?page=delete&post_id=<?php echo $item['post_id'] ?>" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                                         </td>
                                     </tr>
-                                <?php
+                                    <?php
                                 }
 
                                 ?>
