@@ -7,7 +7,7 @@ if (isset($_SESSION['login'])) {
         $page = $_GET['page'];
     }
     if ($page == "All") {
-        $statment = $connect->prepare("select * from posts where `status`='0' ");
+        $statment = $connect->prepare("select * from posts where `status`='1'");
         $statment->execute();
         $usercount = $statment->rowcount();
         $result = $statment->fetchall();
@@ -25,16 +25,18 @@ if (isset($_SESSION['login'])) {
                             header("refresh:3;url=posts.php");
                         }
                         ?>
-                        <h4 class="text-center mb-4"> Pending Approval Articles
-                            <span class="badge badge-primary"><?php echo $usercount ?></span>
-                        </h4>
+                        <div class="d-flex justify-content-center ">
+                            <h4 class="text-center mb-4"> Number Of Articles
+                                <span class="badge badge-primary"><?php echo $usercount ?></span>
+                            </h4>
+                            <a  href="?page=pending"> Pending Articles</a>
+                        </div>
                         <table class="table table-striped table-dark ">
                             <thead>
                                 <tr>
                                     <th scope="col">id</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Content</th>
-                                    <th scope="col">Status</th>
                                     <th scope="col">Operation</th>
                                 </tr>
                             </thead>
@@ -46,7 +48,6 @@ if (isset($_SESSION['login'])) {
                                         <th scope="row"><?php echo $item['post_id'] ?></th>
                                         <td><?php echo $item['title'] ?></td>
                                         <td><?php echo $item['description'] ?></td>
-                                        <td><?php echo $item['status'] ?></td>
                                         <td>
                                             <a href="?page=show&post_id=<?php echo $item['post_id'] ?>" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
                                             <a href="?page=edit&post_id=<?php echo $item['post_id'] ?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a>
@@ -172,7 +173,65 @@ if (isset($_SESSION['login'])) {
         } catch (PDOException $e) {
             header("Refresh:3;url=posts.php?page=edit&post_id=$oldid");
         }
-    }
+    }else if ($page == "pending") {
+        $statment = $connect->prepare("select * from posts where `status`='0' ");
+        $statment->execute();
+        $usercount = $statment->rowcount();
+        $result = $statment->fetchall();
+    ?>  
+     <div class="container mt-5 ">
+            <div class="row">
+                <div class="col-md-10 m-auto pt-5">
+                    <div>
+                        <?php
+                        if (isset($_SESSION['message'])) {
+                            echo "<h4 class='text-center alert alert-success'>" . $_SESSION['message'] . "</h4>";
+                            unset($_SESSION['message']);
+                            header("refresh:3;url=posts.php");
+                        }
+                        ?>
+                        <h4 class="text-center mb-4"> Pending Approval Articles
+                            <span class="badge badge-primary"><?php echo $usercount ?></span>
+                        </h4>
+                        <table class="table table-striped table-dark ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Content</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Operation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($result as $item) {
+                                ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $item['post_id'] ?></th>
+                                        <td><?php echo $item['title'] ?></td>
+                                        <td><?php echo $item['description'] ?></td>
+                                        <td><?php echo $item['status'] ?></td>
+                                        <td>
+                                            <a href="?page=show&post_id=<?php echo $item['post_id'] ?>" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
+                                            <a href="?page=edit&post_id=<?php echo $item['post_id'] ?>" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <a href="?page=delete&post_id=<?php echo $item['post_id'] ?>" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+
+                                ?>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <?php
+    } 
     ?>
 
 
