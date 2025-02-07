@@ -20,7 +20,7 @@ if (isset($_SESSION['loginuser'])) {
                             if (isset($_SESSION['message'])) {
                                 echo "<h4 class='text-center alert alert-success'>" . $_SESSION['message'] . "</h4>";
                                 unset($_SESSION['message']);
-                                header("refresh:20;url=posts.php");
+                                header("refresh:20;url=userindex.php");
                             }
                             ?>
                             <h4 class="text-center mb-4">ARTICLES
