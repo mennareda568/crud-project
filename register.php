@@ -67,8 +67,8 @@ if (isset($_SESSION['message'])) {
             (username,email,`password`,`status`,`role`,created_at)
             values(?,?,?,'1','user',now())");
     $statment->execute(array($name, $email, $pass));
-    $_SESSION['userlogin'] = $email;
-    header("Location:index.php");
+    $_SESSION['loginuser'] = $email;
+    header("Location:userindex.php");
   }
 }
 ?>
