@@ -17,12 +17,12 @@ session_start();
         <li class="nav-item">
           <a class="nav-link" href="posts.php">Articles</a>
         </li>
+        <li class="nav-item">
+          <a href="password.php?email=<?php echo $_SESSION['userlogin'] ?>" class="btn btn-warning">Change My Password </i></a>
+        </li>
         <?php
       }
       ?>
-      <li class="nav-item">
-        <a href="password.php?email=<?php echo $_SESSION['userlogin'] ?>" class="btn btn-warning">Change My Password </i></a>
-      </li>
 
       <a class="nav-link btn btn-success ml-3" href="logout.php">Log out</a>
       </li>
